@@ -1,0 +1,74 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet'  href='{{ url_for("static", filename="style.css") }}' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>PyDocs - Documents</title>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form">
+        <div class="contact-main">
+            <h1>Your Documents</h1>
+            <div class="document-btns">
+                <a href="/docs/shared">Shared Docs</a>
+                <a href="/docs/browse">Browse Docs</a>
+            </div>
+            <div class="documents">
+                {% for document in documents %}
+                <div class="document-row">
+                    <img src="/static/images/logo.png" alt="Logo">
+                    <h1>{{ document.name }}</h1>
+                    <div class="rename" style="display: none;">
+                        <h1>Rename "{{ document.name }}" <a href="{{ url_for('docs') }}">X</a></h1>
+                        <div class="main-rename">
+                            <input type="text" class="main-name-box">
+                            <button onclick="renameDoc({{ document.id }})">Submit</button>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('document', docid=document.id) }}">Open</a>
+                    <button class="rename-doc">Rename Doc</button>
+                    <a class="delete-document" href="{{ url_for('deletedoc', id=document.id) }}">X</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button class="document-creator">New Document</button>
+        <div class="document-form" style="display: none;">
+            {{ documentform.csrf_token }}
+            {{ wtf.quick_form(documentform) }}
+        </div>
+    </section>
+    <script>
+        document.querySelector(".document-creator").addEventListener("click", () => {
+            if (document.querySelector(".document-form").style.display === "none") {
+                document.querySelector(".document-form").style = "display: flex;"
+            } else {
+                document.querySelector(".document-form").style = "display: none;"
+            }
+        })
+        document.querySelectorAll(".document-row").forEach(e => {
+            rename = e.querySelector(".rename-doc")
+            renamepage = e.querySelector(".rename")
+            rename.addEventListener("click", () => {
+                renamepage.style.display = "flex";
+            })
+        })
+        function renameDoc(id) {
+            let textBox
+            document.querySelectorAll(".main-name-box").forEach(box => {
+                if (box.value != "") {
+                    textBox = box.value
+                }
+            })
+            if (textBox != "") {
+                window.location.href = `/renamedoc/${id}/${textBox}`
+            }
+        }
+    </script>
+</body>
+</html>

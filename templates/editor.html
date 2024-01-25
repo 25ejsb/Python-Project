@@ -1,0 +1,557 @@
+<div class="edits">
+    {% if firstdocument.creator.id == current_user.id %}
+    <div class="editing-tools">
+        <div class="editing-slide-1">
+            <div class="editing-adds">
+                <button class="small-button btn" id="bold-text" data-element="bold"><b>B</b></button>
+                <button class="small-button btn" id="italic-text" data-element="italic"><i>i</i></button>
+                <button class="small-button btn" id="underline-text" data-element="underline"><u>U</u></button>
+                <button class="small-button btn" id="crossout-text" data-element="strikeThrough"><s>S</s></button>
+                <input type="submit" class="small-button" id="print" value="&#128424" onclick="printMe()">
+            </div>
+            <label for="font-color">Font Color:</label>
+            <input type="color" class="font-color" id="font-color">
+            <div class="edit-btns">
+                <button class="font-submit">Submit</button>
+                <button id="remove-color">Reset</button>
+            </div>
+            <label for="highlight-color-picker">Highlight:</label>
+            <input type="color" id="highlight-color-picker">
+            <div class="edit-btns">
+                <button id="highlight-button">Submit</button>
+                <button id="remove-highlight">Reset</button>
+            </div>
+            <label for="font-size-select">Font Size:</label>
+            <select id="font-size-select">
+                <option value="2">small</option>
+                <option value="3">default</option>
+                <option value="4">medium</option>
+                <option value="5">big</option>
+                <option value="6">large</option>
+            </select>
+            <label for="fontSelect">Font Name:</label>
+            <select id="fontSelect">
+                <option style="font-family: 'Arial';" value="Arial">Arial</option>
+                <option style="font-family: 'Verdana';" value="Verdana">Verdana</option>
+                <option style="font-family: 'Times New Roman';" value="Times New Roman">Times New Roman</option>
+                <option style="font-family: 'Courier New';" value="Courier New">Courier New</option>
+                <option style="font-family: 'Cabin';" value="Cabin">Cabin</option>
+                <option style="font-family: monospace;" value="monospace">monospace</option>
+                <option style="font-family: 'Impact';" value="Impact">Impact</option>
+                <option style="font-family: 'Lexend';" value="Lexend">Lexend</option>
+                <option style="font-family: 'Caveat';" value="Caveat">Caveat</option>
+                <option style="font-family: 'Lora';" value="Lora">Lora</option>
+                <option style="font-family: 'Comic Sans MS';" value="Comic Sans MS">Comic Sans MS</option>
+                <option style="font-family: 'Montserrat';" value="Montserrat">Montserrat</option>
+                <option style="font-family: 'Nunito';" value="Nunito">Nunito</option>
+                <option style="font-family: 'Spectral';" value="Spectral">Spectral</option>
+            </select>
+            <label for="image-btn">Image:</label>
+            <button name="image-btn" id="image-btn" class="image-btn">Image Editor</button>
+            <label>Formatting Options</label>
+            <div class="formatting-options">
+                <button id="justify-left">L</button>
+                <button id="justify-center">C</button>
+                <button id="justify-right">R</button>
+            </div>
+        </div>
+        <div class="editing-slide-2" style="display: none;">
+            <label>Lists:</label>
+            <button id="unordered-list">Bulleted List</button>
+            <button id="ordered-list">Numbered List</button>
+            <div class="indent-btns">
+                <button id="outdent"><i class="fa-solid fa-outdent"></i></button>
+                <button id="indent"><i class="fa-solid fa-indent"></i></button>
+            </div>
+            <label>Links:</label>
+            <button id="add-link" onclick="document.querySelector('.link-editor').style = 'display: flex;'">Add A Link</button>
+            <button id="linkify">Linkify</button>
+            <label>Download:</label>
+            <div class="download-btns">
+                <button id="txt">.txt</button>
+                <button id="pdf">.pdf</button>
+            </div>
+        </div>
+        <div class="editing-slide-btns" style="margin-top: 1rem;">
+            <button class="edit-slide-left"><</button>
+            <button class="edit-slide-right">></button>
+        </div>
+    </div>
+    {% endif %}
+    {% if firstdocument.creator.id == current_user.id %}
+    <div class="write-text" id="div-element-0" contenteditable="true">{{ firstdocument.content | safe }}</div>
+    {% else %}
+    <div class="write-text" id="div-element-0" contenteditable="false">{{ firstdocument.content | safe }}</div>
+    {% endif %}
+</div>
+<div class="link-editor" style="display: none;">
+   <div class="image-main" style="height: 50%;">
+        <div class="first-row">
+            <h1>Link Editor</h1>
+            <button onclick="document.querySelector('.link-editor').style = 'display: none;'">X</button>
+        </div>
+        <label for="link">Link URL:</label>
+        <input type="text" name="link" id="link" placeholder="Enter URL:">
+        <label for="ink-holder">Link Placeholder:</label>
+        <input type="text" name="link-holder" id="link-holder" placeholder="Enter Placeholder:">
+        <button id="enter-link">Add Link</button>
+   </div> 
+</div>
+<div class="image-editor" style="display: none;">
+    <div class="image-main">
+        <div class="first-row">
+            <h1>Image Editor</h1>
+            <button onclick="turnOff()">X</button>
+        </div>
+        <label for="image-url">Image Url</label>
+        <input type="text" name="image-url" id="image-url">
+        <label for="image-file" class="label-btn">Choose File</label>
+        <input type="file" name="image-file" id="image-file" accept="image/png, image/gif, image/jpeg">
+        <div class="image-size">
+            <label for="image-width">Width:</label>
+            <input type="text" id="image-width" class="image-width">
+            <label for="image-height">Height:</label>
+            <input type="text" id="image-height" class="image-height">
+        </div>
+        <div class="image-load">
+            Select Image
+        </div>
+        <button id="add-image">Add Image</button>
+    </div>
+</div>
+<script>
+    const textArea = document.querySelector(".write-text")
+    const boldBtn = document.getElementById("bold-text")
+    const italicBtn = document.getElementById("italic-text")
+    const underlineBtn = document.getElementById("underline-text")
+    const crossoutBtn = document.getElementById("crossout-text")
+    if (document.querySelector(".share")) {
+        document.querySelector(".share").addEventListener("click", () => {
+            if (document.querySelector(".share-div").style.display === "none") {
+                document.querySelector(".share-div").style = "display: flex;"
+                document.querySelector(".share-div").classList.add("share-anim")
+                if (document.querySelector(".share-div").classList.contains("share-remove")) {
+                    document.querySelector(".share-div").classList.remove("share-remove")
+                }
+            } else {
+                document.querySelector(".share-div").style = "display: none;"
+            }
+        })
+    }
+    document.querySelector(".font-submit").addEventListener("click", e => {
+        textArea.focus()
+        restoreSelection()
+        colour = document.querySelector(".font-color").value
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand("foreColor", false, colour)
+    })
+    var fontsizeSelect = document.querySelector("#font-size-select")
+    fontsizeSelect.addEventListener("change", e => {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand("fontSize", false, fontsizeSelect.value)
+    })
+
+    var highlightinput = document.getElementById("highlight-color-picker")
+    var highlightbutton = document.getElementById("highlight-button")
+    highlightbutton.addEventListener("click", e => {
+        textArea.focus()
+        restoreSelection()
+        const highlightcolor = highlightinput.value;
+        document.execCommand("hiliteColor", false, highlightcolor)
+    })
+    var removeHighlight = document.getElementById("remove-highlight")
+    if (removeHighlight) {
+        removeHighlight.addEventListener("click", e => {
+            textArea.focus()
+            restoreSelection()
+            document.execCommand("hiliteColor", false, "white");
+        })
+    }
+    var removeColor = document.getElementById("remove-color")
+    removeColor.addEventListener("click", e => {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand("foreColor", false, "black");
+    })
+
+    var imageBtn = document.querySelector(".image-btn")
+    imageBtn.addEventListener("click", e => {
+        document.querySelector(".image-editor").style.display = "flex";
+    })
+
+    function turnOff(e) {
+        document.querySelector(".image-editor").style.display = "none";
+    }
+
+    var buttons2 = document.querySelectorAll(".btn")
+    buttons2.forEach(element => {
+        element.addEventListener("click", e => {
+            textArea.focus()
+            restoreSelection()
+            let command = element.dataset['element']
+            document.execCommand(command, false, null)
+        })
+    })
+
+    document.querySelector("#image-url").oninput = function(e) {
+        var image = new Image()
+        image.src = document.querySelector("#image-url").value
+        image.onload = function() {
+            $(".image-load").html("")
+            $(".image-load").css({"backgroundImage": `url(${document.querySelector("#image-url").value})`, "width": image.width, "height": image.height, "maxWidth": "60%", "maxHeight": "40%"})
+            document.querySelector(".image-width").value = image.width
+            document.querySelector(".image-height").value = image.height
+        }
+    }
+
+    $("#image-file").change(function() {
+        document.querySelector(".image-load").textContent = ""
+        var fileReader = new FileReader()
+        fileReader.onload = function(e) {
+            var image = new Image();
+            image.src = e.target.result;
+            image.onload = function() {
+                $(".image-load").css({"backgroundImage": `url(${e.target.result})`, "width": image.width, "height": image.height, "maxWidth": "60%", "maxHeight": "40%"})
+                document.querySelector(".image-width").value = image.width
+                document.querySelector(".image-height").value = image.height
+                document.querySelector("#image-url").value = ""
+            }
+            
+        }
+        if (document.getElementById("image-file").files[0]) {
+            fileReader.readAsDataURL(document.getElementById("image-file").files[0])
+        }
+    })  
+
+    $("#add-image").click(function() {
+        textEditor.innerHTML = textEditor.innerHTML + `<img src="${$(".image-load").css("backgroundImage").replace('url(','').replace(')','').replace(/\"/gi, "")}" style="width: ${document.querySelector(".image-width").value}px; height: ${document.querySelector(".image-height").value}px" alt="Image">`
+        $(".image-editor").css("display", "none")
+    })
+
+    $("#justify-left").click(function() {
+        const selectedText = window.getSelection().toString().trim();
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("styleWithCSS", false, true);
+        document.execCommand("justifyLeft", false, null);
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            range = selection.getRangeAt(0).startContainer.parentNode.nodeName === "UL";
+            if (range) {
+                selection.getRangeAt(0).startContainer.parentNode.style = "";
+            }
+        }
+    })
+
+    $("#justify-center").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("styleWithCSS", false, true);
+        document.execCommand("justifyCenter", false, null);
+        const selection = window.getSelection();
+    })
+
+    $("#justify-right").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("styleWithCSS", false, true);
+        document.execCommand("justifyRight", false, null);
+    })
+
+    $("#fontSelect").change(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand('styleWithCSS', false, true);
+        document.execCommand("fontName", false, document.querySelector("#fontSelect").value)
+    })
+
+    $("#unordered-list").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("insertUnorderedList", false, null)
+    })
+
+    $("#ordered-list").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("insertOrderedList", false, null)
+    })
+
+    $("#outdent").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("outdent", false, null)
+    })
+
+    $("#indent").click(function() {
+        textArea.focus()
+        restoreSelection()
+        document.execCommand("indent", false, null)
+    })
+
+    $("#enter-link").click(function() {
+        if ($("#link").val() && $("#link-holder").val()) {
+            $(".link-editor").css("display", "none")
+            const url = $("#link").val();
+            textArea.focus()
+            restoreSelection()
+            const anchor = document.createElement("a");
+            anchor.href = $("#link").val();
+            anchor.textContent = $("#link-holder").val();
+
+            const selection = window.getSelection();
+            const range = selection.getRangeAt(0);
+            range.deleteContents();
+            range.insertNode(anchor);
+            anchor.addEventListener("click", function (event) {
+                event.preventDefault();
+                window.open(url, "_blank");
+            });
+        }
+    })
+
+    $("#linkify").click(function() {
+        const selectedText = window.getSelection().toString();
+        if (selectedText) {
+            const url = prompt("Enter the URL:");
+            if (url) {
+                // Apply the "createLink" command to turn the selected text into a link
+                const anchor = document.createElement("a");
+                anchor.href = url;
+                anchor.textContent = selectedText;
+
+                const range = window.getSelection().getRangeAt(0);
+                range.deleteContents();
+                range.insertNode(anchor);
+
+                anchor.addEventListener("click", (e) => {
+                    e.preventDefault()
+                    window.open(url, "_blank")
+                })
+            }
+        }
+    })
+
+    document.querySelectorAll(".write-text a").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault()
+            window.open(item.href, "_blank")
+        })
+    })
+
+    document.addEventListener("keydown", (e) => {
+        if (e.keyCode == 9) {
+            e.preventDefault()
+            document.execCommand("indent", false, null)
+        }
+    })
+
+    $("#txt").click(function() {
+        // Get the text content of the contenteditable div
+        const text = textArea.innerText;
+
+        if (text) {
+            // Create a Blob containing the text
+            const blob = new Blob([text], { type: "text/plain" });
+            
+            // Create a URL for the Blob
+            const url = URL.createObjectURL(blob);
+
+            // Create an anchor element to trigger the download
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${document.querySelector(".company-name").textContent.toLowerCase().replace(" ", "-")}.txt`;
+            a.style.display = "none";
+
+            // Append the anchor element to the document and trigger the click event
+            document.body.appendChild(a);
+            a.click();
+
+            // Remove the anchor element and revoke the URL to free resources
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    })
+
+    $("#pdf").click(function(){
+        const content = textArea.outerHTML;
+
+        // Send the HTML content to the server for PDF generation
+        fetch('/generate_pdf', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content })
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'content.pdf';
+            a.click();
+        });
+
+    })
+
+    function printMe() {
+        window.print()
+    }
+
+   var pageLength = 2;
+   var pageNum = 1;
+   document.querySelector(".edit-slide-left").addEventListener("click", e => {
+    if (pageNum === 1) {
+        pageNum = pageLength;
+    } else {
+        pageNum -= 1;
+    }
+    for (let i = 1; i <= pageLength; i++) {
+        if (i == pageNum && document.querySelector(`.editing-slide-${pageNum}`) != null) {
+            document.querySelector(`.editing-slide-${pageNum}`).style = "display: flex;";
+        } else if (i != pageNum && document.querySelector(`.editing-slide-${i}`) != null) {
+            document.querySelector(`.editing-slide-${i}`).style = "display: none;";
+        }
+    }
+   })
+
+   document.addEventListener("keydown", (e) => {
+    if (e.keyCode == 37 && !$(textArea).is(':focus')) {
+        e.preventDefault()
+        if (pageNum === 1) {
+            pageNum = pageLength;
+        } else {
+            pageNum -= 1;
+        }
+        for (let i = 1; i <= pageLength; i++) {
+            if (i == pageNum && document.querySelector(`.editing-slide-${pageNum}`) != null) {
+                document.querySelector(`.editing-slide-${pageNum}`).style = "display: flex;";
+            } else if (i != pageNum && document.querySelector(`.editing-slide-${i}`) != null) {
+                document.querySelector(`.editing-slide-${i}`).style = "display: none;";
+            }
+        }
+    }
+   })
+
+   document.querySelector(".edit-slide-right").addEventListener("click", e => {
+    if (pageNum === pageLength) {
+        pageNum = 1;
+    } else {
+        pageNum += 1;
+    }
+    for (let i = 1; i <= pageLength; i++) {
+        if (i == pageNum && document.querySelector(`.editing-slide-${pageNum}`) != null) {
+            document.querySelector(`.editing-slide-${pageNum}`).style = "display: flex;";
+        } else if (i != pageNum && document.querySelector(`.editing-slide-${i}`) != null) {
+            document.querySelector(`.editing-slide-${i}`).style = "display: none;";
+        }
+    }
+   })
+
+   
+   document.addEventListener("keydown", (e) => {
+    if (e.keyCode == 39 && !$(textArea).is(':focus')) {
+        e.preventDefault()
+        if (pageNum === pageLength) {
+            pageNum = 1;
+        } else {
+            pageNum += 1;
+        }
+        for (let i = 1; i <= pageLength; i++) {
+            if (i == pageNum && document.querySelector(`.editing-slide-${pageNum}`) != null) {
+                document.querySelector(`.editing-slide-${pageNum}`).style = "display: flex;";
+            } else if (i != pageNum && document.querySelector(`.editing-slide-${i}`) != null) {
+                document.querySelector(`.editing-slide-${i}`).style = "display: none;";
+            }
+        }
+    }
+   })
+
+    setInterval(e => {
+        if (document.queryCommandValue("fontSize") === "2") {
+            const text = "small"
+            const $select = document.querySelector('#font-size-select');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text ===text);
+            optionToSelect.selected = true;
+        } else if (document.queryCommandValue("fontSize") === "4") {
+            const text = "medium"
+            const $select = document.querySelector('#font-size-select');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text ===text);
+            optionToSelect.selected = true;
+        } else if (document.queryCommandValue("fontSize") === "5") {
+            const text = "big"
+            const $select = document.querySelector('#font-size-select');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text ===text);
+            optionToSelect.selected = true;
+        } else if (document.queryCommandValue("fontSize") === "6") {
+            const text = "large"
+            const $select = document.querySelector('#font-size-select');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text ===text);
+            optionToSelect.selected = true;
+        } else if (document.queryCommandValue("fontSize") === "3") {
+            const text = "default"
+            const $select = document.querySelector('#font-size-select');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text ===text);
+            optionToSelect.selected = true;
+        }
+        if (document.activeElement === textArea) {
+            const font = document.queryCommandValue("fontName").replace('"', "").replace('"', "")
+            const $select = document.querySelector('#fontSelect');
+            const $options = Array.from($select.options);
+            const optionToSelect = $options.find(item => item.text === font);
+            optionToSelect.selected = true;
+        }
+        let count = 1;
+        document.querySelectorAll(".write-text *").forEach(e => {
+            e.setAttribute("id", "div-element-" + count)
+            count += 1;
+        })
+        document.querySelector("#fontSelect").style = `font-family: "${document.querySelector("#fontSelect").value}";`
+    }, 1)
+   
+    let savedSelection
+    // Save the cursor position when the text editor loses focus
+    textArea.addEventListener("blur", function () {
+        savedSelection = saveSelection();
+    });
+
+    // Restore the cursor position when the text editor gains focus
+    textArea.addEventListener("focus", function (e) {
+        if (savedSelection) {
+            restoreSelection(savedSelection);
+        }
+    });
+
+    function saveSelection() {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            return selection.getRangeAt(0);
+        }
+        return null;
+    }
+    function restoreSelection(range) {
+        if (range) {
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+    }
+
+    function moveCursorToEnd(el) {
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+</script>

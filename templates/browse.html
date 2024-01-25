@@ -1,0 +1,39 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet'  href='{{ url_for("static", filename="style.css") }}' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>PyDocs - Browse</title>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <div class="section-form">
+        <div class="contact-main">
+            <div class="row">
+                <h1>Browse PyDocs</h1>
+                <a href="/docs" style="margin-left: 3rem;">X</a>
+            </div>
+            <div class="search-row">
+                {{ searchform.csrf_token }}
+                {{ wtf.quick_form(searchform) }}
+            </div>
+            {% if docs|length == 0 %}
+            <h1>No Results Found :(</h1>
+            {% endif %}
+            {% for doc in docs[:10] %}
+            <div class="shared-row">
+                <img src="/static/images/logo.png" alt="Logo">
+                <h1>{{ doc.name }}</h1>
+                <h2>By: @{{ doc.creator.username }}</h2>
+                <h2>Views: {{ doc.views }}</h2>
+                <a href="{{ url_for('document', docid=doc.id)}}">Open</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

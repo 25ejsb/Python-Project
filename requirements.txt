@@ -1,0 +1,11 @@
+Flask
+Flask-SocketIO
+flask-bootstrap
+Werkzeug
+Flask-SQLAlchemy
+flask-login
+flask-wtf
+flask-ckeditor
+weasyprint
+eventlet
+gunicorn

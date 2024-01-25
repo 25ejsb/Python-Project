@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyDocs - Shared</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form">
+        <div class="contact-main">
+            <div class="row">
+                <h1>Shared Documents</h1>
+                <a href="/docs" style="margin-left: 3rem;">X</a>
+            </div>
+            {% if length == 0 %}
+            <h1 style="background-image: none; color: black;">No Shared Documents :(</h1>
+            {% endif %}
+            {% for doc in shared_docs %}
+            {% if doc.parent_doc != None %}
+            <div class="shared-row">
+                <img src="/static/images/logo.png" alt="Logo">
+                <h1>{{ doc.parent_doc.name }}</h1>
+                <h2>Shared by: @{{ doc.parent_doc.creator.username }}</h2>
+                <a href="{{ url_for('document', docid=doc.parent_doc.id)}}">Open</a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>

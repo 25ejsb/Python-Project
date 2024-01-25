@@ -1,0 +1,21 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <title>PyDocs - Login</title>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form">
+        <div class="contact-main">
+            <h1>Login To PyDocs</h1>
+            {{ form.csrf_token }}
+            {{ wtf.quick_form(form) }}
+        </div>
+    </section>
+</body>
+</html>

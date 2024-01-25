@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/636faabd98.js" crossorigin="anonymous"></script>
+    <script src="/static/javascript/html2pdf.bundle.js"></script>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+    <title>PyDocs - Edits for {{ doc.name }}</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form" style="display: flex; justify-content: center; align-items: center;">
+        <div class="contact-main">
+            <h1>Your Edit Requests/Commits</h1>
+            {% if editdocs.count() != 0 %}
+            {% for editdoc in editdocs %}
+            <h2 class="edit-h2">Commit #id {{ editdoc.id }} - <a href="{{ url_for('edit', editid=editdoc.id) }}">Edit</a></h2>
+            {% endfor %}
+            {% else %}
+            <h2 class="edit-h2 commit-h2">No Commits Yet! <a href="{{ url_for('createedit', docid=doc.id) }}">Create One</a></h2>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>

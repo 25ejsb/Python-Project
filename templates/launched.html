@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <title>Pydocs - Same Account has Document Open</title>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <div class="section-form">
+        <div class="contact-main">
+            <h1>Document Already Launched</h1>
+            <h2>Same Account Launched Document from Somewhere Else (tab, device, etc.)</h2>
+            <a href="{{ url_for('home') }}">Return To Docs</a>
+        </div>
+    </div>
+</body>
+</html>

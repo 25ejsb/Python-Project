@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/static/style.css" rel="stylesheet" type="text/css">
+    <title>PyDocs - Home</title>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+</head>
+<body>
+    {% include "nav.html" %}
+    <header class="header">
+        <div class="header-left">
+            <img src="/static/images/logo.png" alt="Logo">
+        </div>
+        <div class="header-right">
+            <h1>PyDocs</h1>
+            <h2>The most secure and valuable document app</h2>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+    </header>
+    <section class="about-section" id="about">
+        <h1>About PyDocs</h1>
+        <div class="card-section">
+            <div class="main-card">
+                <p>Pydocs makes it easier to write fluent and easy to share documents, Pydocs have all the tools you need to make beautiful and professional websites. Pydocs is completely free with all its features, making it a easy and good option</p>
+                <img src="https://cdn.hswstatic.com/gif/space-smell-2.jpg" alt="Image 1">
+            </div>
+        </div>
+        <div class="card-section">
+            <div class="main-card">
+                <p>Pydocs is really fast and accessible due to it completely being on the web! Pydocs is also easy for working in a team because people can request changes, and add comments.</p>
+                <img src="https://media.wbur.org/wp/2022/07/main_image_star-forming_region_carina_nircam_final-5mb.jpeg" alt="Image 2">
+            </div>
+        </div>
+        
+        <div class="card-section">
+            <div class="main-card">
+                <p>Pydocs is a project built on flask Python, and is mainly meant as a project for practice, and can still be in development at any time, if you have any bug reports or problems, contact me with form below</p>
+                <img src="https://wallpaperboat.com/wp-content/uploads/2019/10/high-resolution-space-image-01.jpg" alt="Image 3">
+            </div>
+        </div>
+    </section>
+    <section class="contact-section" id="contact">
+        <form action="{{ url_for('contactres') }}" method="POST" class="contact-main">
+            <h1>Contact Us</h1>
+            <div class="contact-names">
+                <input type="text" name="first-name" id="first-name" placeholder="Enter Your First Name">
+                <input type="text" name="last-name" id="last-name" placeholder="Enter Your Last Name">
+            </div>
+            <input type="email" name="email" id="email" placeholder="Enter Your Email">
+            <input type="tel" name="phone" id="phone" placeholder="Enter Your Phone">
+            <textarea type="text" id="message" name="message" placeholder="Enter Your Message"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</body>
+</html>

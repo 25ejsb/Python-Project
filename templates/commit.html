@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/636faabd98.js" crossorigin="anonymous"></script>
+    <script src="/static/javascript/html2pdf.bundle.js"></script>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+    <title>PyDocs - Edit Commit #id {{ firstdocument.id }}</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form" style="display: flex; justify-content: center; align-items: center; padding-top: 10rem;">
+        {% include "editor.html" %}
+        {% if firstdocument.editdoc.creator.username == current_user.username %}
+        <a class="publish-btn" href="/docs/push/{{ firstdocument.editdoc.id }}/{{ firstdocument.id }}">Publish</a>
+        {% endif %}
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $(".nav a h4").html("{{ firstdocument.editdoc.name }} - Commit")
+            $(".nav a").attr("href", "/docs/{{ firstdocument.editdoc.id }}")
+        })
+
+        window.addEventListener("beforeunload", (e) => {
+            var text = document.querySelector('.write-text').innerHTML
+            fetch("/saveedit?id={{ firstdocument.id }}", {
+                headers: {
+                    'text': text
+                }
+            })
+        })
+      
+        setInterval(() => {
+            var text = document.querySelector('.write-text').innerHTML
+            fetch("/saveedit?id={{ firstdocument.id }}", {
+                headers: {
+                    'text': text
+                }
+            })
+        }, 1000)
+      
+    </script>
+</body>
+</html>

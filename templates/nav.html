@@ -1,0 +1,38 @@
+<nav class="nav">
+    <a href="/#"><img src="/static/images/logo.png" alt="Logo"> <h4 class="company-name">PyDocs</h4></a>
+    <div class="nav-links">
+        <a href="/#">Home</a>
+        {% if not current_user.is_authenticated %}
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <label>@{{ current_user.username }}</label>
+        {% endif %}
+    </div>
+</nav>
+<script>
+    setInterval(() => {
+        if (window.scrollY >= 100) {
+            document.querySelector(".nav").style = "background-color: white; box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);"
+            document.querySelectorAll(".nav a").forEach(item => item.style = "color: #101010;")
+            if (document.querySelector(".nav label")) {
+                document.querySelector(".nav label").style = "color: #101010;"
+                if (document.querySelector(".online-btn")) {
+                    document.querySelector(".online-btn").style = "color: #101010;"
+                }
+            }
+        } else {
+            document.querySelector(".nav").style = "background-color: transparent; box-shadow: none;"
+            document.querySelectorAll(".nav a").forEach(item => item.style = "color: #fff;")
+            if (document.querySelector(".nav label")) {
+                document.querySelector(".nav label").style = "color: #fff;"
+                if (document.querySelector(".online-btn")) {
+                    document.querySelector(".online-btn").style = "color: #fff;"
+                }
+            }
+        }
+    }, 1)
+</script>

@@ -1,0 +1,1633 @@
+@import url(https://fonts.googleapis.com/css?family=Cabin&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Lexend);
+@import url(https://fonts.googleapis.com/css?family=Caveat);
+@import url(https://fonts.googleapis.com/css?family=Lora);
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+@import url(https://fonts.googleapis.com/css?family=Spectral);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Lexend", sans-serif;
+}
+
+.header {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    background-image: radial-gradient(circle at 25%, white 20%, grey 30%, black 50%, transparent 100%), url(https://images.unsplash.com/photo-1445905595283-21f8ae8a33d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D&w=1000&q=80);
+    background-size: 100% 100%;
+}
+
+.header .header-left {
+    width: 50%;
+    height: 90%;
+    background-size: 100% 100%;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.header-left img {
+    width: 80%;
+    height: 80%;
+    transform: rotate3d(1, 7, 6, -25rad);
+}
+
+.header .header-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: start;
+    color: white;
+    height: 80%;
+    width: 35%;
+    text-align: center;
+    padding: 0 3%;
+}
+
+.header-right h1 {
+    font-weight: 500;
+    letter-spacing: 7px;
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+}
+
+.header-right h2 {
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.header-right a {
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    padding: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 1rem;
+    border-radius: 3rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    width: 15rem;
+    background-position: 0;
+    overflow: hidden;
+    transition: all .5s;
+    background-size: 250%;
+}
+
+.header-right a:hover {
+    transform: translateY(-4px);
+    background-position: 100%;
+}
+
+.header-right a:active {
+    transform: translateY(4px);
+}
+
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    border-radius: 0 0 2rem 2rem;
+    transition: all .5s;
+}
+
+.nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.nav a img {
+    width: 8rem;
+    height: 8rem;
+}
+
+.nav-links {
+    padding: 0 3%;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-links a {
+    font-size: 1.75rem;
+    margin: 1rem;
+}
+
+.nav-links label {
+    color: white;
+    font-size: 1.75rem;
+    margin: 1rem;
+}
+
+.about-section {
+    padding: 7% 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.about-section h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right, lightblue, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+    padding: 0.5rem;
+}
+
+.card-section {
+    height: 80rem;
+}
+
+.main-card {
+    position: sticky;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    height: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-card p {
+    width: 50%;
+    font-size: 1.75rem;
+    text-align: center;
+    padding: 0 2%;
+}
+
+.main-card img {
+    width: 50%;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.contact-section {
+    padding: 7% 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: radial-gradient(circle at center, white 20%, grey 30%, black 50%, transparent 100%), url(https://images.unsplash.com/photo-1445905595283-21f8ae8a33d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D&w=1000&q=80);
+}
+
+.contact-main {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 6% 6%;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.contact-main form {
+    width: 80%;
+}
+
+.contact-main h1 {
+    font-size: 3.5rem;
+    background-image: linear-gradient(to right, lightblue, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+    padding: 0.1rem;
+    margin-bottom: 1rem;
+}
+
+.contact-names {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contact-main input, .contact-main textarea {
+    width: 100%;
+    font-size: 2rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: "Lexend";
+    height: 5rem;
+    color: black;
+    margin-bottom: 2rem;
+}
+
+.contact-main textarea {
+    height: 11rem;
+    resize: none;
+}
+
+.contact-main button {
+    padding: 1rem;
+    border-radius: 4rem;
+    color: white;
+    border: none;
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    background-size: 250%;
+    background-position: 0;
+    font-family: "Lexend";
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+.contact-main button:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.contact-main button:active {
+    transform: translateY(4px);
+}
+
+.contact-names input {
+    width: 49%;
+    font-size: 2rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: "Lexend";
+    height: 5rem;
+    color: black;
+    margin-bottom: 2rem;
+}
+
+.contact-names input::placeholder, .contact-main input::placeholder, .contact-main textarea::placeholder {
+    color: black;
+}
+
+.contact-names input:focus, .contact-main input:focus, .contact-main textarea:focus {
+    outline: none;
+}
+
+.section-form {
+    min-height: 100vh;
+    background-image: radial-gradient(circle at center, white 20%, grey 30%, black 50%, transparent 100%), url(https://images.unsplash.com/photo-1445905595283-21f8ae8a33d2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D&w=1000&q=80);
+    background-attachment: fixed;
+    padding: 7% 7%;
+}
+
+.section-form .contact-main {
+    margin-top: 4rem;
+}
+
+input[type="submit"] {
+    border-radius: 4rem;
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    background-size: 250%;
+    background-position: 0;
+    color: white;
+    transition: all .5s;
+}
+
+input[type="submit"]:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+input[type="submit"]:active {
+    transform: translateY(4px);
+}
+
+.documents {
+    width: 100%;
+    height: 30rem;
+    overflow: auto;
+}
+
+.document-creator {
+    position: fixed;
+    top: 80%;
+    left: 75%;
+    padding: 1rem;
+    border-radius: 4rem;
+    color: white;
+    font-family: "Lexend";
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    background-size: 250%;
+    background-position: 0;
+    transition: all .5s;
+    font-size: 2.5rem;
+}
+
+.document-creator:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.document-creator:active {
+    transform: translateY(4px);
+}
+
+.document-form {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 2rem;
+    width: 20rem;
+    position: fixed;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    top: 52.5%;
+    left: 73.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.document-form input[type="submit"] {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    text-transform: uppercase;
+    font-family: "Lexend";
+    letter-spacing: 2px;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.document-form input {
+    width: 80%;
+    border: none;
+    height: 3rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: "Lexend";
+    font-size: 1.5rem;
+}
+
+.document-form input::placeholder {
+    font-family: "Lexend";
+    color: black;
+}
+
+.document-form input:focus {
+    outline: none;
+}
+
+.document-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 8rem;
+}
+
+.document-row a:not(.delete-document) {
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    border-radius: 4rem;
+    padding: 1rem;
+    font-size: 2.5rem;
+    background-size: 250%;
+    background-position: 0;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+.document-row a:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.document-row a:active {
+    transform: translateY(4px);
+}
+
+.delete-document {
+    text-decoration: none;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    padding: 1rem;
+    width: 4rem;
+    margin: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    transition: all .5s;
+}
+
+.document-row img {
+    height: 100%;
+    width: 8rem;
+}
+
+.rename {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1001;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.rename h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.rename h1 a {
+    text-decoration: none;
+    margin: 1rem;
+    color: white;
+    background-color: red;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50%;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    transition: all .5s;
+}
+
+.main-rename {
+    width: 70%;
+    height: 50%;
+    background-color: white;
+    border-radius: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 3%;
+}
+
+.write-text {
+    width: 70%;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: white;
+    font-family: "Arial";
+    resize: none;
+}
+
+.write-text:focus {
+    outline: none;
+}
+
+.edits {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.editing-tools {
+    background-color: white;
+    position: fixed;
+    left: 0;
+    top: 20%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem .7rem;
+    height: 77%;
+    border-radius: 0 2rem 2rem 0;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+}
+.edits button {
+    border: none;
+    background-size: 250%;
+    background-image: linear-gradient(to right, blue, navy, blue);
+    background-position: 0;
+    padding: .7rem;
+    color: white;
+    margin-bottom: 1rem;
+    margin: .5rem;
+    font-family: "Lexend";
+    letter-spacing: 2px;
+    font-size: .5rem;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    transition: all .5s;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.editing-adds {
+    display: flex;
+    flex-wrap: wrap;
+    width: 9rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.small-button {
+    width: 2rem;
+    border-radius: 50%;
+}
+
+.edits button:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.edits button:active {
+    background-position: 125%;
+    transform: translateY(4px);
+}
+
+.edits input {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-size: 1rem;
+    font-family: "Lexend";
+    width: 100%;
+    padding: .5rem;
+}
+
+.edits input:focus {
+    outline: none;
+}
+
+.share, .chat {
+    position: fixed;
+    font-size: 1.2rem;
+    top: 80%;
+    left: 90%;
+    padding: 1rem;
+    border-radius: 4rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    background-position: 0;
+    border: none;
+    font-family: inherit;
+    color: white;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+.chat {
+    left: 90.4%;
+    top: 90%;
+}
+
+.chat-div {
+    position: fixed;
+    width: 17.5%;
+    height: 25rem;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    top: 61%;
+    left: 90%;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.chat-div h1 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.chat-box {
+    width: 95%;
+    height: 60%;
+    overflow: auto;
+}
+
+.chat-div input[type="text"] {
+    border: none;
+    font-family: "Lexend", sans-serif;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    color: black;
+    font-size: 1.2rem;
+    padding: 0.5rem 0.1rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+    caret-color: blue;
+    letter-spacing: 2px;
+}
+
+.chat-div input[type="text"]:focus {
+    outline: none;
+}
+
+.chat-div input[type="text"]::placeholder {
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.chat-div form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.chat-div button {
+    border: none;
+    font-family: "Lexend", sans-serif;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    color: white;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    font-size: 1.4rem;
+    width: 80%;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 1rem;
+    background-size: 250%;
+    transition: all .5s;
+}
+
+
+.chat-div button:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.chat-div button:active {
+    background-position: 125%;
+    transform: translateY(4px);
+}
+
+
+.share-anim {
+    animation: share .4s 1;
+}
+
+@keyframes share {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.share-remove {
+    animation: share-remove .4s 1;
+}
+
+@keyframes share-remove {
+    0% {
+        opacity: 1;
+    }
+    99.99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.share:hover, .chat:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.share:active, .chat:active {
+    transform: translateY(4px);
+}
+
+.share-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 0.5rem;
+    z-index: 100000;
+}
+
+.share-div .form .form-group, .share-div .form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.share-div .form {
+    width: 100%;
+}
+
+.share-div .form input {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-family: "Lexend";
+}
+
+.share-div .form input:focus {
+    outline: none;
+}
+
+.share-div .form input[type="submit"] {
+    letter-spacing: 2px;
+    font-family: "Lexend";
+}
+
+.users-share {
+    height: 70%;
+    margin-top: 1rem;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.share-row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: .5rem;
+    width: 100%;
+}
+
+.share-row h2 {
+    font-size: 2rem;
+}
+
+.share-row a {
+    font-size: 1.75rem;
+    font-family: inherit;
+}
+
+.share-div a {
+    text-decoration: none;
+    color: white;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, blue, navy, blue);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    padding: 0.3rem .75rem;
+    background-size: 250%;
+    background-position: 0;
+    transition: all .5s;
+}
+
+.share-div a:hover {
+    background-position: 125%;
+    transform: translateY(-2px);
+}
+
+.share-div a:active {
+    transform: translateY(2px);
+}
+
+.shared-row {
+    display: flex;
+    width: 100%;
+    height: 8rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.shared-row img {
+    height: 100%;
+    width: 15%;
+}
+
+.shared-row h2 {
+    font-size: 2.5rem;
+    margin: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.shared-row a {
+    text-decoration: none;
+    padding: 1rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    border-radius: 4rem;
+    color: white;
+    background-size: 250%;
+    background-position: 0;
+    margin: 0 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-size: 2rem;
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+.shared-row a:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.shared-row a:active {
+    transform: translateY(4px);
+}
+
+.document-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    height: 5rem;
+}
+
+.document-btns a {
+    text-decoration: none;
+    padding: .5rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    border-radius: 4rem;
+    color: white;
+    background-size: 250%;
+    background-position: 0;
+    margin: 0 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-size: 2rem;
+    letter-spacing: 2px;
+    transition: all .5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.document-btns a:hover {
+    transform: translateY(-4px);
+    background-position: 125%;
+}
+
+.document-btns a:active {
+    transform: translateY(4px);
+}
+
+.suggestions {
+    position: fixed;
+    top: 30%;
+    left: 84%;
+    background-color: white;
+    min-height: 16rem;
+    width: 16rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+    border-radius: 1rem;
+}
+
+.suggestions h3 {
+    margin-bottom: .5rem;
+    border-bottom: 2px solid black;
+}
+
+.suggestions textarea {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: inherit;
+    width: 80%;
+    resize: none;
+    height: 5rem;
+    margin: .5rem 0;
+}
+
+.suggestions textarea:focus {
+    outline: none;
+}
+
+.suggestions p {
+    margin-bottom: .5rem;
+}
+
+.suggestions h2 {
+    width: 100%;
+    overflow: auto;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.suggestions button {
+    padding: .5rem;
+    color: white;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    background-position: 0;
+    border: none;
+    border-radius: 4rem;
+    font-size: 1.5rem;
+    font-family: inherit;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.5);
+    letter-spacing: 2px;
+    transition: all .5s;
+    margin-bottom: 1rem;
+}
+
+.suggestions button:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.suggestions button:active {
+    transform: translateY(4px);
+}
+
+.suggestions-close {
+    width: 80%;
+    display: flex;
+    justify-content: end;
+}
+
+.suggestions-close button {
+    margin: .3rem 0;
+    font-size: .7rem;
+}
+
+.suggestions h1 {
+    background-color: yellow;
+    text-align: center;
+    width: 100%;
+    overflow: auto;
+    max-height: 4rem;
+}
+
+.suggestion {
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    background-color: #fafafa;
+    padding: 1rem;
+    margin: .5rem;
+    width: 13rem;
+    text-align: center;
+    overflow: visible;
+    min-height: 10rem;
+    z-index: 2;
+}
+
+.suggestion p {
+    text-align: center;
+}
+
+.suggestion-row {
+    height: 13rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.suggestions-suggest {
+    top: 30%;
+    left: 1%;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    border-radius: 2rem;
+}
+
+.suggestion-btns {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.suggestion-btns a {
+    text-decoration: none;
+    color: white;
+    border-radius: 50%;
+    padding: .3rem .5rem;
+    transition: all .5s;
+}
+
+.suggestion-btns a:hover {
+    transform: translateY(-4px)
+}
+
+.suggestion-btns a:active {
+    transform: translateY(4px)
+}
+
+.suggestion-btns a:nth-of-type(odd) {
+    background-color: green;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.suggestion-btns a:nth-of-type(even) {
+    background-color: red;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.edits p {
+    color: white;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.image-editor {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.image-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    background-color: white;
+    width: 60%;
+    height: 70%;
+    border-radius: 3rem;
+    padding: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+}
+
+.first-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.first-row h1 {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#add-image, #enter-link {
+    padding: 1rem;
+    color: white;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    border-radius: 2rem;
+    margin: 1rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: inherit;
+    font-size: 1.25rem;
+    transition: all .5s;
+}
+
+.first-row button {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    margin-left: 4rem;
+    background-color: red;
+    color: white;
+    font-size: 2rem;
+    transition: all .5s;
+    font-family: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first-row button:hover, #add-image:hover, #enter-link:hover {
+    transform: translateY(-4px);
+}
+
+.first-row button:active, #add-image:active, #enter-link:active {
+    transform: translateY(4px);
+}
+
+label[for="image-url"] {
+    margin-top: 2rem;
+}
+
+.image-main label {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+#image-url, #link, #link-holder {
+    width: 80%;
+    border: none;
+    height: 3rem;
+    font-size: 1.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: inherit;
+}
+
+#image-url:focus, #link:focus, #link-holder:focus {
+    outline: none;
+}
+
+.image-main input[type="file"] {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    display: none;
+}
+
+.label-btn {
+    border-radius: 2rem;
+    color: white;
+    background-image: linear-gradient(to right, lightblue, blue, lightblue);
+    background-size: 250%;
+    padding: .5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    transition: all .5s;
+    font-size: .75rem;
+}
+
+.label-btn:hover {
+    transform: translateY(-4px);
+}
+
+.label-btn:active {
+    transform: translateY(4px);
+}
+
+.image-load {
+    max-width: 60%;
+    background-color: rgb(200, 200, 200);
+    max-height: 40%;
+    width: 60%;
+    height: 40%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+    background-size: 100% 100%;
+    background-position: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+}
+
+.image-size {
+    margin-top: 1rem;
+}
+
+.image-size input {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    color: black;
+    font-family: inherit;
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    margin: 0 1rem;
+}
+
+.image-size input:focus {
+    outline: none;
+}
+
+.image-size input::placeholder {
+    color: black;
+}
+
+.editing-slide-1, .editing-slide-2 {
+    width: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.editing-tools select {
+    width: 80%;
+}
+
+.editing-slide-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 90%;
+    left: 25%;
+}
+
+#print {
+    border: none;
+    background-size: 250%;
+    background-image: linear-gradient(to right, blue, navy, blue);
+    background-position: 0;
+    padding: .7rem;
+    color: white;
+    margin-bottom: 1rem;
+    margin: .5rem;
+    font-family: "Lexend";
+    letter-spacing: 2px;
+    font-size: .5rem;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    transition: all .5s;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    width: 2rem;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .nav, .nav * {
+        display: none !important;
+    }
+    .write-text, .write-text * {
+        visibility: visible;
+    }
+    .write-text {
+        display: inline-block;
+        width: 100%;
+        border: none;
+    }
+}
+
+.company-name {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.editing-tools select {
+    width: 90%;
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    padding: 0.1rem;
+    font-family: "Lexend";
+}
+
+.editing-tools select:focus {
+    outline: none;
+}
+
+.write-text ul, .write-text ol {
+    display: inline-block;
+    text-align: left;
+    position: relative;
+}
+
+.write-text ul li, .write-text ol li {
+    padding-right: 3rem;
+    margin-left: 1rem;
+}
+
+.link-editor {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.write-text a {
+    color: blue;
+    cursor: pointer;
+}
+
+#share-role {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    font-family: "Lexend", sans-serif;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    border-radius: 2rem;
+}
+
+#share-role:focus {
+    outline: none;
+}
+
+.online-btn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-family: "Lexend", sans-serif;
+    cursor: pointer;
+    font-size: 1.75rem;
+    margin: 1rem;
+    letter-spacing: 2px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.online {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    width: 50%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.online h1 {
+    width: 50%; 
+    text-align: center;
+}
+
+.online-users {
+    height: 80%;
+    width: 90%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.online-users h2 {
+    letter-spacing: 2px;
+}
+
+.contact-main a {
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    font-size: 1.5rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    border-radius: 2rem;
+    margin-top: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    transition: all .5s;
+}
+
+.contact-main a:hover {
+    transform: translateY(-4px);
+    background-position: 125%;
+}
+
+.contact-main h2 {
+    font-size: 1.75rem;
+}
+
+.contact-main a:active {
+    transform: translateY(4px);
+    background-size: 125%;
+}
+
+.share-row select {
+    margin: 0 1rem;
+    font-family: "Lexend", sans-serif;
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    padding: .5rem;
+    font-size: 1.2rem;
+}
+
+.share-row select {
+    outline: none;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.search-row, .search-row .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-row, .search-row input[type="submit"] {
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 3rem !important;
+}
+
+.search-row .form .form-group input {
+    width: 50rem;
+}
+
+.edit-btns {
+    margin-bottom: 0.5rem;
+}
+
+.link-btn {
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    font-size: 1.5rem;
+    padding: 1rem;
+    border-radius: 2rem;
+    margin: 0 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    transition: all .5s;
+    display: inline-block;
+}
+
+.link-btn:hover {
+    transform: translateY(-4px);
+    background-position: 125%;
+}
+
+.link-btn:active {
+    transform: translateY(4px);
+    background-position: 125%;
+}
+
+.edit-h2 {
+    font-size: 3rem !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-transform: uppercase;
+}
+
+.edit-h2 a {
+    display: inline-block;
+    letter-spacing: 2px;
+    margin: 1rem;
+    height: 100%;
+    text-transform: uppercase;
+}
+
+.commit-h2 {
+    margin: 1rem;
+    text-transform: none;
+}
+
+.commit-btn {
+    position: fixed;
+    color: white;
+    top: 70%;
+    left: 89%;
+    padding: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    font-family: inherit;
+    border-radius: 2rem;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    border: none;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    transition: all .5s;
+}
+
+.commit-btn:hover {
+    transform: translateY(-4px);
+    background-position: 125%;
+}
+
+.commit-btn:active {
+    transform: translateY(4px);
+    background-position: 125%;
+}
+
+.commit-page {
+    background-image: linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    z-index: 9999999999;
+    top: 0;
+    left: 0;
+}
+
+.commits {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 80%;
+    overflow: auto;
+}
+
+.commits a {
+    margin-left: 2rem;
+    text-decoration: none;
+    color: white;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    padding: 1rem;
+    border-radius: 4rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    transition: all .5s;
+    font-size: 1.5rem;
+}
+
+.commits a:hover {
+    background-position: 125%;
+    transform: translateY(-4px);
+}
+
+.commits a:active {
+    background-position: 125%;
+    transform: translateY(4px);
+}
+
+.commits h1 {
+    font-size: 2.5rem;
+    margin: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.publish-btn {
+    text-decoration: none;
+    color: white;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-image: linear-gradient(to right, blue, lightblue, blue);
+    background-size: 250%;
+    padding: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.5);
+    border-radius: 4rem;
+    position: fixed;
+    left: 87%;
+    top: 80%;
+    font-size: 1.5rem;
+    transition: all .5s;
+}
+
+.publish-btn:hover {
+    transform: translateY(-4px);
+    background-position: 125%;
+}
+
+.publish-btn:active {
+    transform: translateY(4px);
+    background-position: 125%;
+}

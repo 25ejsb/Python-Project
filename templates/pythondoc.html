@@ -1,0 +1,439 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/636faabd98.js" crossorigin="anonymous"></script>
+    <script src="/static/javascript/html2pdf.bundle.js"></script>
+    <link rel="shortcut icon" href="/static/images/logo.png" type="image/x-icon">
+    <title>PyDocs - {{ firstdocument.name }}</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <section class="section-form" style="display: flex; justify-content: center; align-items: center; flex-direction: column; padding-top: 10rem;">
+        {% if Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first().role == "Suggestor" or not Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first() and Share.query.filter_by(document_id=firstdocument.id, username='all').first().role == "Suggestor" and not firstdocument.creator.id == current_user.id %}
+        <p>Select text to add a suggestion</p>
+        {% endif %}
+        {% if Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first().role == "Editor" or not Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first() and Share.query.filter_by(document_id=firstdocument.id, username='all').first().role == "Editor" and not firstdocument.creator.id == current_user.id %}
+        <div class="edit-btns">
+            <a class="link-btn" href="/create-edit/{{ firstdocument.id }}">Make New Commit</a>
+            <a class="link-btn" href="/docs/{{ firstdocument.id }}/edits">Edit Saved Commits</a>
+        </div>
+        {% endif %}
+        <div class="edits">
+            {% include "editor.html" %}
+        </div>
+        <div class="online" style="display: none;">
+            <div class="first-row">
+                <h1>Online</h1>
+                <button onclick="document.querySelector('.online').style.display = 'none';">X</button>
+            </div>
+            <div class="online-users">
+                {% for i in users %}
+                {% if Share.query.filter_by(username="all", document_id=firstdocument.id).first() %}
+                {% if i.username != current_user.username %}
+                {% if firstdocument.creator.username == i.username %}
+                    <h2>@{{ i.username }} - Owner</h2>
+                {% else %}
+                    {% if not Share.query.filter_by(username=i.username, document_id=firstdocument.id).first() %}
+                        <h2>@{{ i.username }} - {{ Share.query.filter_by(document_id=firstdocument.id, username="all").first().role }}</h2>
+                    {% else %}
+                        <h2>@{{ i.username }} - {{ Share.query.filter_by(username=i.username, document_id=firstdocument.id).first().role }}</h2>
+                    {% endif %}
+                {% endif %}
+                {% else %}
+                    {% if i.username != current_user.username %}
+                        {% if firstdocument.creator.username == i.username %}
+                        <h2>@{{ i.username }} - Owner</h2>
+                        {% else %}
+                        <h2>@{{ i.username }} - {{ Share.query.filter_by(username=i.username, document_id=firstdocument.id).first().role }}</h2>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="share-div" style="display: none;">
+            <div class="image-main">
+                <div class="first-row">
+                    <h1>Share Document</h1>
+                    <button onclick="document.querySelector('.share-div').classList.add('share-remove'); document.querySelector('.share-div').classList.remove('share-anim'); setTimeout(() => {document.querySelector('.share-div').style = 'display: none;'}, 400)">X</button>
+                </div>
+                <div class="users-share">
+                    {% for share in shares %}
+                    <div class="share-row" style="{% if share.username == "all" %}order: -1;{% endif %}">
+                        {% if share.username == "all" %}
+                        <h2>Global Role</h2>
+                        {% else %}
+                        <h2>@{{ share.username }}</h2>
+                        {% endif %}
+                        {% if current_user.id == firstdocument.creator.id %}
+                        <select name="share-role" id="share-role">
+                            <option value="Editor" {% if share.role == "Editor" %}selected{% endif %}>Editor</option>
+                            <option value="Suggestor" {% if share.role == "Suggestor" %}selected{% endif %}>Suggestor</option>
+                            <option value="Viewer" {% if share.role == "Viewer" %}selected{% endif %}>Viewer</option>
+                        </select>
+                        {% if share.username != "all" %}
+                            <a href="{{ url_for('removeshare', doc=firstdocument.id, shareid=share.id) }}">X</a>
+                        {% endif %}
+                        {% else %}
+                        <select name="share-role" id="share-role" style="display: none;">
+                            <option value="Editor" {% if share.role == "Editor" %}selected{% endif %}>Editor</option>
+                            <option value="Suggestor" {% if share.role == "Suggestor" %}selected{% endif %}>Suggestor</option>
+                            <option value="Viewer" {% if share.role == "Viewer" %}selected{% endif %}>Viewer</option>
+                        </select>
+                        {% if share.username != "all" %}
+                            <a href="{{ url_for('removeshare', doc=firstdocument.id, shareid=share.id) }}" style="display: none;">X</a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <p style="color: red; text-align: center;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+                {{ shareform.csrf_token }}
+                {{ wtf.quick_form(shareform) }}
+                <div class="share-row" style="justify-content: center;">
+                    <h1>Document Privacy:</h1>
+                    <select name="share-privacy" id="share-privacy">
+                        <option value="Private" {% if firstdocument.privacy == "Private" %}selected{% endif %}>Private</option>
+                        <option value="Public" {% if firstdocument.privacy == "Public" %}selected{% endif %}>Public</option>
+                    </select>
+                    <h1>Default Role:</h1>
+                    <select name="share-default-role" id="share-default-role">
+                        <option value="Viewer" {% if firstdocument.default_role == "Viewer" %}selected{% endif %}>Viewer</option>
+                        <option value="Suggestor" {% if firstdocument.default_role == "Suggestor" %}selected{% endif %}>Suggestor</option>
+                        <option value="Editor" {% if firstdocument.default_role == "Editor" %}selected{% endif %}>Editor</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {% if Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first().role == "Suggestor" or not Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first() and Share.query.filter_by(document_id=firstdocument.id, username='all').first().role == "Suggestor" and not firstdocument.creator.id == current_user.id %}
+        <div class="suggestions-suggest suggestions" style="display: none;">
+            <div class="suggestions-close">
+                <button>X</button>
+            </div>
+            <h2>Select Text</h2>
+            <label for="suggestion-text">Suggestion Note:</label>
+            <textarea id="suggestion-text"></textarea>
+            <button class="suggestion-submit">Submit</button>
+        </div>
+        {% endif %}
+        <div class="suggestions">
+            <h2 style="text-align:center; padding: 0.2rem;">Suggestions</h2>
+            <div class="suggestion-row">
+                {% for suggestion in suggestions %}
+                <div class="suggestion" 
+                {% if suggestion.done == 1 %}
+                style="-webkit-order: 1;"
+                {% else %}
+                style="-webkit-order: 0;"
+                {% endif %}>
+                    <h3>@{{ suggestion.suggestion_author.username }}</h3>
+                    <h1 style="word-wrap: break-word; padding: 0.4rem;">{{ suggestion.suggestion_highlight }}</h1>
+                    <p>{{ suggestion.suggestion_text }}</p>
+                    {% if firstdocument.creator.id == current_user.id and suggestion.done != 1 or Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first().role == "Editor" and suggestion.done != 1 %}
+                    <div class="suggestion-btns">
+                        <a href="{{ url_for('suggestiondone', suggestid=suggestion.id, docid=firstdocument.id) }}">✔</a>
+                        <a href="{{ url_for('removesuggestion', suggestid=suggestion.id, docid=firstdocument.id) }}">X</a>
+                    </div>
+                    {% endif %}
+                    {% if suggestion.done == 1 %}
+                    <h3 style="color: green; text-transform: uppercase; font-size: 0.9rem">Marked As Solved</h3>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if firstdocument.creator.id == current_user.id %}
+        <button class="commit-btn">Commits</button>
+        <div class="commit-page" style="display: none;">
+            <div class="image-main">
+                <div class="first-row">
+                    <h1>Commits/Edits</h1>
+                    <button onclick="document.querySelector('.commit-page').style = 'display: none;'">X</button>
+                </div>
+                <div class="commits">
+                    {% for i in EditRequest.query.filter_by(editdoc=firstdocument).all() %}
+                    <h1>{{ i.creator.username }} - Commit #{{ i.id }} <a href="/docs/edit/{{ i.id }}">Open</a> <a href="/docs/edit/delete/{{ i.id }}">Delete</a></h1>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <button class="share">Share</button>
+        {% else %}
+        <button class="share" onclick="shareclick()" style="display: none;">Share</button>
+        {% endif %}
+        <div class="chat-div" style="display: none;">
+            <h1>Chat</h1>
+            <div class="chat-box">
+                {% for msg in chatmsgs %}
+                <h2 style="
+                {% if current_user.username == msg.message_author.username %}
+                text-align: right;
+                background-image: linear-gradient(to right, blue, lightblue, blue);
+                -webkit-background-clip: text;
+                color: transparent;
+                {% endif %}
+                ">@{{ msg.message_author.username }}: {{ msg.message }}</h2>
+                {% endfor %}
+            </div>
+            <form onsubmit="return false;">
+                <input type="text" placeholder="Enter A Message:">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+        <button class="chat">Chat</button>
+    </section>
+
+    <!-- scripts -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/prism.min.js"></script>
+    <link href="https://rawgit.com/PrismJS/prism/gh-pages/themes/prism.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8" type="module">
+        var socket = io();
+        var textEditor = document.querySelector(".write-text")
+        var peopleOnline = document.createElement("button")
+        peopleOnline.innerHTML = "Online"
+        peopleOnline.classList.add("online-btn")
+        document.querySelector(".nav-links").appendChild(peopleOnline)
+        peopleOnline.addEventListener("click", e => {
+            if (document.querySelector(".online").style.display === "flex") {
+                document.querySelector(".online").style.display = "none"
+            } else {
+                document.querySelector(".online").style.display = "flex"
+            }
+        })
+        socket.on("connect", () => {
+            var id = socket.id;
+            console.log(id)
+            socket.emit("join", ["{{ firstdocument.id }}", id])
+        })
+        setInterval(() => {
+            document.querySelectorAll(".online-users h2").forEach(e => {
+                if (e.textContent.split(" - ")[1] === "Owner") {
+                    e.style.color = "red"
+                    e.style.order = "0"
+                }
+                if (e.textContent.split(" - ")[1] === "Editor") {
+                    e.style.color = "green"
+                    e.style.order = "1"
+                }
+                if (e.textContent.split(" - ")[1] === "Suggestor") {
+                    e.style.color = "blue"
+                    e.style.order = "2"
+                }
+                if (e.textContent.split(" - ")[1] === "Viewer") {
+                    e.style.order = "3"
+                }
+            })
+        }, 100)
+        document.querySelector(".company-name").textContent = "{{ firstdocument.name }}"
+        socket.on("join_room", (user) => {
+            console.log(user)
+            var newelement = document.createElement("h2")
+            fetch("/getrole/{{ firstdocument.id }}", {
+                headers: {
+                    username: user
+                }
+            }).then(result => {
+               return result.json()
+            }).then(role => {
+                newelement.innerHTML = `@${user} - ${role["Role"]}`
+            })
+            document.querySelector(".online-users").appendChild(newelement)
+        })
+        socket.on("leave_room", (user) => {
+            console.log(user)
+        })
+        socket.on("disconnected_user", (docid) => {
+            setTimeout(() => {
+                if (docid === "{{ firstdocument.id }}") {
+                    fetch("/getusers/{{ firstdocument.id }}").then(result => {
+                        return result.json()
+                    }).then(users => {
+                        console.log("Hello?")
+                        document.querySelector(".online-users").innerHTML = ""
+                        users["Users"].forEach(e => {
+                            console.log("e " + e)
+                            let newuser = document.createElement("h2")
+                            newuser.textContent = e
+                            document.querySelector(".online-users").appendChild(newuser)
+                        })
+                    })
+                }
+            }, 1000)
+        })
+        document.querySelector(".chat-div button").addEventListener("click", () => {
+            const inputText = document.querySelector(".chat-div input").value
+            if (inputText.length > 0) {
+                document.querySelector(".chat-div input").value = ""
+                socket.emit("chat-send", [inputText, "{{ current_user.username }}", "{{ firstdocument.id }}"])
+            }
+        })
+        document.querySelector(".chat").addEventListener("click", () => {
+            if (document.querySelector(".chat-div").style.display === "none") {
+                document.querySelector(".chat-div").style = "display: flex;"
+                var element = document.querySelector(".chat-box");
+                element.scrollTop = element.scrollHeight;
+            } else {
+                document.querySelector(".chat-div").style = "display: none;"
+                var element = document.querySelector(".chat-box");
+                element.scrollTop = element.scrollHeight;
+            }
+        })
+        socket.on("chat-send", (data) => {
+            var newChat = document.createElement("h2")
+            newChat.textContent = `@${data[1]}: ${data[0]}`
+            newChat.style.maxWidth = "3rem !important";
+            newChat.style.wordWrap = "break-word";
+            if (data[1] == "{{ current_user.username }}") {
+                newChat.style.backgroundImage = "linear-gradient(to right, blue, lightblue, blue)"
+                newChat.style.webkitBackgroundClip = "text"
+                newChat.style.color = "transparent"
+                newChat.style.textAlign = "right"
+            }
+            document.querySelector(".chat-box").appendChild(newChat)
+            document.querySelector(".chat-box").scrollTo(0, document.querySelector(".chat-box").scrollHeight);
+        })
+        socket.on("renew_text", (data) => {
+            document.querySelector('.write-text').innerHTML = data
+        })
+        socket.on("leave_room", (msg) => {
+            console.log(msg)
+        })
+        var saved_ranges = [];
+        socket.on("textchanger", (msg) => {
+            document.querySelector(".write-text").innerHTML = msg
+            // make a system to let people request edits, kind of like github
+        })
+        textEditor.oninput = function(e) {
+            socket.emit('changetext', {text: document.querySelector(".write-text").innerHTML, room: "{{ firstdocument.id }}"})
+        }
+    </script>
+    <script>
+        document.querySelector(".share").addEventListener("click" , () => {
+            if (document.querySelector(".share-div").style.display === "none") {
+                document.querySelector(".share-div").style = "display: flex;"
+                document.querySelector(".share-div").classList.add("share-anim")
+                if (document.querySelector(".share-div").classList.contains("share-remove")) {
+                    document.querySelector(".share-div").classList.remove("share-remove")
+                }
+            } else {
+                document.querySelector(".share-div").style = "display: none;"
+            }
+        })
+
+        document.querySelector(".commit-btn").addEventListener("click", async () => {
+            document.querySelector(".commit-page").style = "display: flex;"
+            var data = await fetch("/docs/getcommits/{{ firstdocument.id }}")
+            data.json().then(result => {
+                document.querySelector(".commits").innerHTML = "";
+                result["Data"].forEach(e => {
+                    var editdoc = document.createElement("h1")
+                    editdoc.innerHTML = `${e[1]} - Commit #${e[0]} <a href="/docs/edit/${e[0]}">Open</a> <a href="/docs/edit/delete/${e[0]}">Delete</a>`
+                    document.querySelector(".commits").appendChild(editdoc)
+                })
+            })
+        })
+
+        window.addEventListener("beforeunload", (ev) => {
+            var text = document.querySelector('.write-text').innerHTML
+              fetch("/save?id={{ firstdocument.id }}", {
+                  headers: {
+                      'text': text
+                  }
+              })
+          })
+  
+          setInterval(() => {
+              var text = document.querySelector('.write-text').innerHTML
+              fetch("/save?id={{ firstdocument.id }}", {
+                  headers: {
+                      'text': text
+                  }
+              })
+          }, 1000)
+          var roleselect = document.querySelectorAll("#share-role")
+          if (roleselect) {
+              roleselect.forEach(element => {
+                  element.addEventListener("change", e => {
+                      console.log("Hello???sd")
+                      console.log(element.parentNode.querySelector("h2").textContent.slice(1).toString())
+                      fetch("/changerole/{{ firstdocument.id }}", {
+                          headers: {
+                              username: element.parentNode.querySelector("h2").textContent.slice(1),
+                              newrole:element.value
+                          }
+                      })
+                  })
+              })
+          }
+  
+          var roledefaultselect = document.querySelector("#share-default-role")
+          roledefaultselect.addEventListener("change", e => {
+              fetch("/share-default-role/{{ firstdocument.id }}", {
+                  method: "POST",
+                  headers: {
+                      role: roledefaultselect.value
+                  }
+              })
+          })
+  
+          var shareprivacy = document.querySelector("#share-privacy")
+          shareprivacy.addEventListener("change", e => {
+              fetch("/set-document-privacy/{{ firstdocument.id }}", {
+                  method: "POST",
+                  headers: {
+                      "privacy": shareprivacy.value.toString()
+                  }
+              }).then(result => {
+                  window.location.href = "/docs/{{ firstdocument.id }}"
+              })
+          })
+    </script>
+    {% if Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first().role == "Suggestor" or not Share.query.filter_by(document_id=firstdocument.id, username=current_user.username).first() and Share.query.filter_by(document_id=firstdocument.id, username='all').first().role == "Suggestor" and not firstdocument.creator.id == current_user.id %}
+    <script>
+        const textarea = document.querySelector(".write-text");
+        textarea.addEventListener("mouseup", e => {
+            e.preventDefault()
+            const selectedText = getSelectedText()
+            if (document.querySelector(".suggestions-suggest").style.display === "none" && selectedText != "") {
+                console.log("Hello???")
+                document.querySelector(".suggestions-suggest").style.display = "flex"
+                if (selectedText.length > 0) {
+                    document.querySelector(".suggestions-suggest").querySelector("h2").textContent = selectedText
+                    document.querySelector(".suggestions-suggest").querySelector("h2").style.backgroundColor = "yellow";
+                }
+            }
+        })
+        function getSelectedText() {
+            const selection = window.getSelection();
+            return selection.toString();
+        }
+        document.querySelector(".suggestions-close button").addEventListener("click", e => {
+            document.querySelector(".suggestions").style.display = "none"
+        })
+        document.querySelector(".suggestion-submit").addEventListener("click", e => {
+            fetch("/addsuggestion/{{ firstdocument.id }}", {
+                headers: {
+                    'highlighted_text': document.querySelector(".suggestions").querySelector("h2").textContent,
+                    'text': document.querySelector(".suggestions").querySelector("textarea").value
+                }
+            })
+            window.location.href = "/docs/{{ firstdocument.id }}"
+        })
+    </script>
+    {% endif %}
+</body>
+</html>
